@@ -40,7 +40,7 @@ export const useProductStore = create((set) => ({
   fetchFeaturedProducts: async () => {
     set({ loading: true });
     try {
-      const response = await axios.get("/products/featured");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/featured`);
       set({ products: response.data.products, loading: false });
     } catch (error) {
       set({ loading: false });
