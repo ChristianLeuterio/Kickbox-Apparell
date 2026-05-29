@@ -16,9 +16,9 @@ const categories = [
 ];
 
 const HomePage = () => {
-  // ✅ use selectors instead of destructuring
+  // ✅ use selectors for featuredProducts
   const fetchFeaturedProducts = useProductStore((state) => state.fetchFeaturedProducts);
-  const products = useProductStore((state) => state.products);
+  const featuredProducts = useProductStore((state) => state.featuredProducts);
   const isLoading = useProductStore((state) => state.loading);
 
   const { addToCart } = useCartStore();
@@ -29,18 +29,18 @@ const HomePage = () => {
   }, [fetchFeaturedProducts]);
 
   const nextProducts = () => {
-    if (products && currentIndex + 4 < products.length) {
+    if (featuredProducts && currentIndex + 4 < featuredProducts.length) {
       setCurrentIndex(currentIndex + 4);
     }
   };
 
   const prevProducts = () => {
-    if (products && currentIndex - 4 >= 0) {
+    if (featuredProducts && currentIndex - 4 >= 0) {
       setCurrentIndex(currentIndex - 4);
     }
   };
 
-  const visibleProducts = products ? products.slice(currentIndex, currentIndex + 4) : [];
+  const visibleProducts = featuredProducts ? featuredProducts.slice(currentIndex, currentIndex + 4) : [];
 
   return (
     <div className="relative min-h-screen bg-gray-50 text-gray-900 overflow-hidden">
@@ -121,9 +121,9 @@ const HomePage = () => {
                 {/* Right Arrow */}
                 <button
                   onClick={nextProducts}
-                  disabled={currentIndex + 4 >= products.length}
+                  disabled={currentIndex + 4 >= featuredProducts.length}
                   className={`absolute -right-4 z-20 p-2 rounded-full shadow transition ${
-                    currentIndex + 4 >= products.length
+                    currentIndex + 4 >= featuredProducts.length
                       ? "bg-gray-400 text-gray-200 cursor-not-allowed"
                       : "bg-gray-800 text-white hover:bg-gray-700"
                   }`}
